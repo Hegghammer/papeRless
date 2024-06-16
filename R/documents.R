@@ -102,7 +102,7 @@ get_doc_info_df <- function(id,
     stop("API key must be a 40-character string.")
   }
 
-  if (!(is.integer(n_tags) && length(n_tags) == 1)) {
+  if (!(is.numeric(n_tags) && length(n_tags) == 1)) {
     stop("n_tags must be a single integer.")
   }
 
