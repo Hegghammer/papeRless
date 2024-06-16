@@ -1,0 +1,17 @@
+^papeRless\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^\.git$
+^\.github$
+^\.gitignore$
+^\.Rhistory$
+^codecov\.yml$
+^\.httr-oauth$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^index\.md$
+^vignettes/articles$
+^papeRless\.code-workspace$
+^README\.md$
+
