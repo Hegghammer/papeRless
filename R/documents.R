@@ -167,13 +167,13 @@ get_doc_info_df <- function(id,
   if (is.null(res$created)) {
       created <- NA
     } else {
-      created <- res$content
+      created <- res$created
     }
 
   if (is.null(res$created_date)) {
       created_date <- NA
     } else {
-      created_date <- res$content
+      created_date <- res$created_date
     }
 
   if (is.null(res$modified)) {
