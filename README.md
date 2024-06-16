@@ -1,6 +1,6 @@
-# papeRless: Access the Paperless-ngx API From R
+# papeRless: Access the Paperless-ngx API from R
 
-**papeRless** is an R package for [Paperless-ngx](https://docs.paperless-ngx.com/), an open-source document management system. The package provides basic access to the Paperless-ngx [REST API](https://docs.paperless-ngx.com/api/) so that you can interact with a Paperless-ngx instance from within R. The package is in early development and only contains functions for select REST API operations.
+**papeRless** is an R package for [Paperless-ngx](https://docs.paperless-ngx.com/), the open-source document management system. The package provides basic access to the Paperless-ngx [REST API](https://docs.paperless-ngx.com/api/) so that you can interact with a Paperless-ngx instance from within R. The package is in early development and only contains functions for select REST API operations.
 
 ## Use
 
@@ -14,13 +14,15 @@ df <- get_all_docs_df()
 
 Search a Paperless-ngx instance:
 
-```
+```R
+## NOT RUN
 ids <- search_docs("london")
 ```
 
 Download a document from a Paperless-ngx instance:
 
-```
+```R
+## NOT RUN
 download_doc(ids[1])
 ```
 
