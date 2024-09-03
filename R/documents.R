@@ -14,9 +14,7 @@
 #' get_doc_ids()
 #' }
 get_doc_ids <- function(base_url = get_base_url(),
-                        api_key = get_api_key()
-                        ) {
-
+                        api_key = get_api_key()) {
   if (!grepl("http", base_url)) {
     stop("URL must include http:// or https://")
   }
@@ -26,9 +24,10 @@ get_doc_ids <- function(base_url = get_base_url(),
   }
 
   url <- file.path(base_url, "api/documents/")
-  res <- req_auth(url, api_key) |> httr2::req_perform() |> httr2::resp_body_json()
+  res <- req_auth(url, api_key) |>
+    httr2::req_perform() |>
+    httr2::resp_body_json()
   unlist(res$all)
-
 }
 
 #' Get document info
@@ -48,9 +47,7 @@ get_doc_ids <- function(base_url = get_base_url(),
 #' }
 get_doc_info <- function(id,
                          base_url = get_base_url(),
-                         api_key = get_api_key()
-                         ) {
-
+                         api_key = get_api_key()) {
   if (!(is.integer(id) && length(id) == 1)) {
     stop("id must be a single integer.")
   }
@@ -64,8 +61,9 @@ get_doc_info <- function(id,
   }
 
   url <- file.path(base_url, "api/documents", id, "")
-  req_auth(url, api_key) |> httr2::req_perform() |> httr2::resp_body_json()
-
+  req_auth(url, api_key) |>
+    httr2::req_perform() |>
+    httr2::resp_body_json()
 }
 
 #' Get document info dataframe
@@ -87,9 +85,7 @@ get_doc_info <- function(id,
 get_doc_info_df <- function(id,
                             base_url = get_base_url(),
                             api_key = get_api_key(),
-                            n_tags = 5
-                            ) {
-
+                            n_tags = 5) {
   if (!(is.integer(id) && length(n_tags) == 1)) {
     stop("id must be a single integer.")
   }
@@ -144,12 +140,14 @@ get_doc_info_df <- function(id,
     content <- res$content
   }
 
-  df1 <- data.frame(id = id,
-                    correspondent = correspondent,
-                    document_type = document_type,
-                    storage_path = storage_path,
-                    title = title,
-                    content = content)
+  df1 <- data.frame(
+    id = id,
+    correspondent = correspondent,
+    document_type = document_type,
+    storage_path = storage_path,
+    title = title,
+    content = content
+  )
 
   df2 <- data.frame(matrix(NA, nrow = 1, ncol = n_tags))
   names(df2) <- paste0("tag", 1:n_tags)
@@ -165,75 +163,77 @@ get_doc_info_df <- function(id,
   }
 
   if (is.null(res$created)) {
-      created <- NA
-    } else {
-      created <- res$created
-    }
+    created <- NA
+  } else {
+    created <- res$created
+  }
 
   if (is.null(res$created_date)) {
-      created_date <- NA
-    } else {
-      created_date <- res$created_date
-    }
+    created_date <- NA
+  } else {
+    created_date <- res$created_date
+  }
 
   if (is.null(res$modified)) {
-      modified <- NA
-    } else {
-      modified <- res$modified
-    }
+    modified <- NA
+  } else {
+    modified <- res$modified
+  }
 
   if (is.null(res$added)) {
-      added <- NA
-    } else {
-      added <- res$added
-    }
+    added <- NA
+  } else {
+    added <- res$added
+  }
 
   if (is.null(res$archive_serial_number)) {
-      archive_serial_number <- NA
-    } else {
-      archive_serial_number <- res$archive_serial_number
-    }
+    archive_serial_number <- NA
+  } else {
+    archive_serial_number <- res$archive_serial_number
+  }
 
   if (is.null(res$original_file_name)) {
-      original_file_name <- NA
-    } else {
-      original_file_name <- res$original_file_name
-    }
+    original_file_name <- NA
+  } else {
+    original_file_name <- res$original_file_name
+  }
 
   if (is.null(res$archived_file_name)) {
-      archived_file_name <- NA
-    } else {
-      archived_file_name <- res$archived_file_name
-    }
+    archived_file_name <- NA
+  } else {
+    archived_file_name <- res$archived_file_name
+  }
 
   if (is.null(res$owner)) {
-      owner <- NA
-    } else {
-      owner <- res$owner
-    }
+    owner <- NA
+  } else {
+    owner <- res$owner
+  }
 
   if (is.null(res$user_can_change)) {
-      user_can_change <- NA
-    } else {
-      user_can_change <- res$user_can_change
-    }
+    user_can_change <- NA
+  } else {
+    user_can_change <- res$user_can_change
+  }
 
   if (is.null(res$is_shared_by_requester)) {
-      is_shared_by_requester <- NA
-    } else {
-      is_shared_by_requester <- res$is_shared_by_requester
-    }
+    is_shared_by_requester <- NA
+  } else {
+    is_shared_by_requester <- res$is_shared_by_requester
+  }
 
-  df3 <- data.frame(created = created,
-                    created_date = created_date,
-                    modified = modified,
-                    added = added,
-                    archive_serial_number = archive_serial_number,
-                    original_file_name = original_file_name,
-                    archived_file_name = archived_file_name,
-                    owner = owner,
-                    user_can_change = user_can_change,
-                    is_shared_by_requester = is_shared_by_requester)
+  df3 <- data.frame(
+    created = created,
+    created_date = created_date,
+    modified = modified,
+    added = added,
+    archive_serial_number = archive_serial_number,
+    original_file_name = original_file_name,
+    archived_file_name = archived_file_name,
+    owner = owner,
+    user_can_change = user_can_change,
+    is_shared_by_requester = is_shared_by_requester
+  )
 
   if (length(res$notes) == 0) {
     note <- NA
@@ -274,9 +274,7 @@ get_doc_info_df <- function(id,
 #' get_all_docs_df()
 #' }
 get_all_docs_df <- function(base_url = get_base_url(),
-                            api_key = get_api_key()
-                            ) {
-
+                            api_key = get_api_key()) {
   if (!grepl("http", base_url)) {
     stop("URL must include http:// or https://")
   }
@@ -313,11 +311,9 @@ get_all_docs_df <- function(base_url = get_base_url(),
 #' download_doc(17)
 #' }
 download_doc <- function(id,
-                    destdir = getwd(),
-                    base_url = get_base_url(),
-                    api_key = get_api_key()
-) {
-
+                         destdir = getwd(),
+                         base_url = get_base_url(),
+                         api_key = get_api_key()) {
   if (!(is.integer(id) && length(id) == 1)) {
     stop("id must be a single integer.")
   }
@@ -337,9 +333,8 @@ download_doc <- function(id,
   res <- get_doc_info(id, base_url, api_key)
   filename <- gsub(" ", "_", res$archived_file_name)
   path <- file.path(destdir, filename)
-  url <- file.path(base_url, "documents", id, "download/")
+  url <- file.path(base_url, "api/documents", id, "download/")
   resp <- req_auth(url, api_key) |> httr2::req_perform()
   writeBin(resp$body, path)
   print(paste("Downloaded", filename, "in", destdir, "."))
-
 }
