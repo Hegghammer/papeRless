@@ -58,7 +58,26 @@ get_corrs <- function(base_url = get_base_url(),
   }
 
   url <- file.path(base_url, "api/correspondents/")
-  req_auth(url, api_key) |> httr2::req_perform() |> httr2::resp_body_json()
+  res <- req_auth(url, api_key) |>
+    httr2::req_perform() |>
+    httr2::resp_body_json()
+
+  results <- res$results
+  next_url <- res[["next"]]
+
+  while (!is.null(next_url)) {
+    page_res <- req_auth(next_url, api_key) |>
+      httr2::req_perform() |>
+      httr2::resp_body_json()
+
+    results <- c(results, page_res$results)
+    next_url <- page_res[["next"]]
+  }
+
+  res$results <- results
+  res["next"] <- list(NULL)
+  res["previous"] <- list(NULL)
+  res
 
 }
 
