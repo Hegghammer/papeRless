@@ -284,14 +284,18 @@ get_all_docs_df <- function(base_url = get_base_url(),
   }
 
   ids <- get_doc_ids(base_url, api_key)
-  print(paste("Processing doc 1 of", length(ids), ".."))
-  df <- get_doc_info_df(ids[1], base_url, api_key)
-  for (i in 2:length(ids)) {
+  rows <- vector("list", length(ids))
+  for (i in seq_along(ids)) {
     print(paste("Processing doc", i, "of", length(ids), ".."))
-    row <- get_doc_info_df(ids[i], base_url, api_key)
-    df <- rbind(df, row)
+    rows[[i]] <- get_doc_info_df(ids[i], base_url, api_key)
   }
-  df
+
+  col_names <- unique(unlist(lapply(rows, names)))
+  rows <- lapply(rows, function(row) {
+    row[setdiff(col_names, names(row))] <- NA
+    row[col_names]
+  })
+  do.call(rbind, rows)
 }
 
 #' Download document
